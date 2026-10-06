@@ -9,12 +9,11 @@ jobs:
         with:
           flutter-version: '3.22.0'
           channel: 'stable'
-      - run: flutter create. --project-name science_3_mousoua --platforms android --no-pub
-      - run: |
-          cat > lib/main.dart << 'EOF'
-          import 'package:flutter/material.dart';
-          void main()=>runApp(const MyApp());
-          class MyApp extends StatelessWidget{const MyApp({super.key});@override Widget build(BuildContext c)=>MaterialApp(debugShowCheckedModeBanner:false,home:Home());}
-          class Home extends StatelessWidget{
-          final units=[
-          {"t":"الوحدة 1: النماذج 🧪","s":"النموذج تمثيل مبسط. مادي: مجسم DNA، حاسوبي: محاكاة طقس، فكري: معادلات. مثال سوداني: نموذج مشروع
+      - name: Create android folder
+        run: flutter create --platforms=android. --project-name science_3_mousoua
+      - name: Build
+        run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
